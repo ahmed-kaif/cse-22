@@ -10,10 +10,10 @@
     CHAR3 DB  ?,CR,LF,"$"
 .CODE
 MAIN PROC
-;initialize Data Segment
+; initialize Data Segment
     MOV AX,@DATA
     MOV DS,AX
-;display msg
+; display msg
     LEA DX,MSG1
     MOV AH,9 ; call string function
     INT 21H
