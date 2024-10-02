@@ -7,6 +7,16 @@ using namespace std;
 typedef pair<int, int> Point;
 typedef vector<Point> vpii;
 
+// struct comp {
+//   // Operator() overloading
+//   bool operator()(const pair<int, int> &p1, const pair<int, int> &p2) const {
+//     double slope1 = tan(p1.second / p1.first);
+//     double slope2 = tan(p2.second / p2.first);
+//     return slope1 < slope2;
+//   }
+// };
+//
+// set<Point, comp> hull_points;
 set<Point> hull_points;
 
 int get_side(Point p1, Point p2, Point p) {
