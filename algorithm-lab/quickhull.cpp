@@ -15,9 +15,17 @@ typedef vector<Point> vpii;
 //     return slope1 < slope2;
 //   }
 // };
-//
-// set<Point, comp> hull_points;
-set<Point> hull_points;
+
+// set<Point, comp> hull_points
+vpii hull_points;
+bool comp(Point p1, Point p2) {
+  double angle1 = atan(p1.second / p1.first);
+  double angle2 = atan(p2.second / p2.first);
+  if (angle1 < angle2)
+    return true;
+  else
+    return false;
+}
 
 int get_side(Point p1, Point p2, Point p) {
   int cross_prod = (p2.first - p1.first) * (p.second - p1.second) -
@@ -63,8 +71,8 @@ void quick_hull(vpii pts, int n, Point p1, Point p2, int side) {
   }
 
   if (max_index == -1) {
-    hull_points.insert(p1);
-    hull_points.insert(p2);
+    hull_points.push_back(p1);
+    hull_points.push_back(p2);
     return;
   }
 
@@ -118,6 +126,10 @@ int main() {
 
   quick_hull(P, n, min, max, 1);
   quick_hull(P, n, min, max, -1);
+
+  sort(hull_points.begin(), hull_points.end(), comp);
+  auto itr = unique(hull_points.begin(), hull_points.end());
+  hull_points.erase(itr, hull_points.end());
 
   cout << "[ ";
   for (auto x : hull_points) {
