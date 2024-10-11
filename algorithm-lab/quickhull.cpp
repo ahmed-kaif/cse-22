@@ -16,8 +16,10 @@ typedef vector<Point> vpii;
 //   }
 // };
 
-// set<Point, comp> hull_points
+set<Point> hull_pts;
 vpii hull_points;
+
+// TODO: Sort points in polar angle order
 bool comp(Point p1, Point p2) {
   double angle1 = atan(p1.second / p1.first);
   double angle2 = atan(p2.second / p2.first);
@@ -109,36 +111,39 @@ int main() {
   for (int i = 0; i < n; i++) {
     cout << P[i].first << ", ";
   }
-  cout << "]" << endl;
+  cout << "\b\b ]" << endl;
   cout << "[ ";
   for (int i = 0; i < n; i++) {
     cout << P[i].second << ", ";
   }
-  cout << "]" << endl;
+  cout << "\b\b ]" << endl;
 
   // Point generate logic END
 
   Point min = get_min(P);
   Point max = get_max(P);
 
-  cout << min.first << ", " << min.second << endl;
-  cout << max.first << ", " << max.second << endl;
+  // cout << min.first << ", " << min.second << endl;
+  // cout << max.first << ", " << max.second << endl;
 
   quick_hull(P, n, min, max, 1);
   quick_hull(P, n, min, max, -1);
 
   sort(hull_points.begin(), hull_points.end(), comp);
-  auto itr = unique(hull_points.begin(), hull_points.end());
-  hull_points.erase(itr, hull_points.end());
+  // auto itr = unique(hull_points.begin(), hull_points.end());
+  // hull_points.erase(itr, hull_points.end());
+  for (auto x : hull_points) {
+    hull_pts.insert(x);
+  }
 
   cout << "[ ";
-  for (auto x : hull_points) {
+  for (auto x : hull_pts) {
     cout << x.first << ", ";
   }
-  cout << "] " << endl;
+  cout << "\b\b ] " << endl;
   cout << "[ ";
-  for (auto x : hull_points) {
+  for (auto x : hull_pts) {
     cout << x.second << ", ";
   }
-  cout << "] " << endl;
+  cout << "\b\b ] " << endl;
 }
