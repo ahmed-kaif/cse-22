@@ -1,0 +1,59 @@
+\section{Task 1}
+\subsection{Problem Statement}
+Implement and compare Insertion Sort, Counting Sort, and Merge Sort based on
+various input size on randomly generated data.  The comparison metric should be
+the execution time of each sorting algorithm.
+\subsection{Code}
+\begin{code}
+    \caption{Code for generating random numbers and saving into a file nums.txt}
+    \cppcode{../random_number.cpp}
+    \label{code:random}
+\end{code}
+
+\begin{code}
+    \caption{Code for insertion sort}
+    \cppcode{../insertion_sort.cpp}
+    \label{code:insertion}
+\end{code}
+
+\begin{code}
+    \caption{Code for merge sort}
+    \cppcode{../merge_sort.cpp}
+    \label{code:merge}
+\end{code}
+
+\begin{code}
+    \caption{Code for counting sort}
+    \cppcode{../counting_sort.cpp}
+    \label{code:counting}
+\end{code}
+\subsection{Output}
+\subsection{Result Analysis \& Discussion}
+
+\newpage
+\section{Task 2}
+\subsection{Problem Statement}
+Implement a Hybrid Sort algorithm where the algorithm switches from Merge Sort
+to Insertion Sort when the size of the subarray to be conquered becomes smaller
+than a threshold. Determine the optimal threshold empirically. Compare this
+Hybrid Sort algorithm with Merge Sort  based on various input size and various
+threshold on randomly generated data.
+\subsection{Code}
+\begin{code}
+    \caption{Code for hybrid sort}
+    \cppcode{../hybrid_sort.cpp}
+\end{code}
+\subsection{Output}
+\subsection{Result Analysis \& Discussion}
+
+\newpage
+\section{Task 3}
+\subsection{Problem Statement}
+Take the Hybrid Sort algorithm from Task 2, instead of Insertion Sort, use
+Bubble Sort. Determine the optimal threshold empirically. Make a 3-way
+comparison between Merge Sort, Hybrid Sort with Insertion Sort, Hybrid Sort
+with Bubble Sort algorithm based on various input size and various threshold on
+randomly generated data.
+\subsection{Code}
+\subsection{Output}
+\subsection{Result Analysis \& Discussion}

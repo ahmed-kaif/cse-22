@@ -1,0 +1,97 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{graphicx}
+\usepackage[a4paper,top=2cm,bottom=3cm]{geometry}
+\usepackage{blindtext}
+% \usepackage{tgpagella}
+\usepackage{inconsolata}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{parskip}
+\usepackage{hyperref}
+\usepackage{minted}
+% university
+\newcommand{\univ}{Rajshahi University of Engineering \& Technology}
+% department
+\newcommand{\thedept}{Department of Computer Science \& Engineering}
+% Course title
+\newcommand{\thecourse}{Algorithms Analysis \& Design Sessional}
+% Lab report Title
+\newcommand{\thetitle}{Sorting}
+% Author
+\newcommand{\theauthor}{Kaif Ahmed Khan}
+% Teacher
+\newcommand{\thesupervisor}{A. F. M. Minhazur Rahman}
+% Designations
+\newcommand{\asp}{Assistant Professor}
+\newcommand{\prof}{Professor}
+\newcommand{\lec}{Lecturer}
+
+\newcommand{\thedesignation}{\lec}
+
+\newenvironment{code}{\captionsetup{type=listing}}{}
+%%%%%%%%%%%%%%%% Minted Style for C++ files %%%%%%
+\newmintedfile[cppcode]{cpp}{
+    linenos=true,
+fontfamily=tt,
+fontsize=\small,
+linenos=true,
+numberblanklines=true,
+breaklines=true,
+numbersep=5pt,
+gobble=0,
+frame=leftline,
+framerule=0.4pt,
+framesep=2mm,
+funcnamehighlighting=true,
+tabsize=4,
+obeytabs=false,
+mathescape=false
+samepage=false, %with this setting you can force the list to appear on the same page
+showspaces=false,
+showtabs =false,
+texcl=false
+}
+
+%%%%% Caption Setup %%%%
+\DeclareCaptionFormat{custom}
+{%
+    {#1#2}\textit{\small #3}
+}
+\captionsetup{format=custom}
+
+\begin{document}
+%%%%%% Title page %%%%%%%
+\begin{titlepage}
+\centering
+{\scshape Heavens' Light is Our Guide\par}\vspace{.25cm}
+\includegraphics[width=0.25\textwidth]{logo}\par\vspace{1cm}
+{\scshape\LARGE \univ\par}
+\vspace{.5cm}
+{\scshape\Large \thedept\par}
+\vspace{1cm}
+{\scshape\Large \thecourse\par}
+\vspace{1cm}
+{\huge\bfseries \thetitle\par}
+\vspace{1cm}
+Submitted by\par
+{\Large \theauthor\par}
+{\Large Roll: 2103163\par}
+\vfill
+Submitted to\par
+{\Large \thesupervisor\\\thedesignation\par}
+\vfill
+% Bottom of the page
+{\large \today\par}
+\end{titlepage}
+\pagenumbering{roman}
+\tableofcontents
+\newpage
+\listoflistings
+\listoffigures
+\newpage
+%%%% Add Lab Pages %%%%
+\pagenumbering{arabic}
+\include{lab1.tex}
+
+
+\end{document}
