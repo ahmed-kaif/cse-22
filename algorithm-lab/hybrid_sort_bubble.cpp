@@ -6,15 +6,29 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <utility>
 #include <vector>
 using namespace std;
 using namespace std::chrono;
 
+void bubble_sort(vector<int> &nums_for_bubble, int p, int r) {
+  for (int i = p; i < r; i++) {
+    for (int j = p; j < r - (i - p); j++) {
+      if (nums_for_bubble[j] > nums_for_bubble[j + 1]) {
+        // swap
+        // int temp = nums_for_bubble[j + 1];
+        // nums_for_bubble[j + 1] = nums_for_bubble[j];
+        // nums_for_bubble[j] = temp;
+        swap(nums_for_bubble[j], nums_for_bubble[j + 1]);
+      }
+    }
+  }
+}
 void insertion_sort(vector<int> &A, int p, int r) {
   for (int i = p + 1; i <= r; i++) {
     int key = A[i];
     int j = i - 1;
-    while (j >= p && A[j] > key) {
+    while (j >= 0 && A[j] > key) {
       A[j + 1] = A[j];
       j--;
     }
@@ -66,7 +80,7 @@ void hybrid_sort(vector<int> &A, int p, int r, int threshold) {
     return;
 
   if (abs(r - p + 1) <= threshold) {
-    insertion_sort(A, p, r);
+    bubble_sort(A, p, r);
     return;
   }
 
@@ -91,8 +105,11 @@ int main() {
 
   inputFile.close();
 
+  vector<int> clone = nums;
+
   int len = nums.size();
 
+loop:
   int threshold;
   cout << "Enter a threshold value: ";
   cin >> threshold;
@@ -107,10 +124,17 @@ int main() {
       chrono::duration_cast<chrono::nanoseconds>(et - st).count();
   time_taken *= 1e-6;
 
-  // for (auto x : nums)
-  //   cout << x << endl;
+  for (auto x : nums)
+    cout << x << endl;
 
+  cout << "Threshold: " << threshold << endl;
   cout << "Time taken for hybrid sort: " << time_taken << " ms" << endl;
-  cout << "No. of Datas: " << nums.size() << endl;
+  cout << "No. of Datas: " << nums.size() << "\n\n";
+
+  if (threshold != 0) {
+    nums = clone;
+    goto loop;
+  }
+
   return 0;
 }
