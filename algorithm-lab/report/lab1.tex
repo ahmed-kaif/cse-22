@@ -27,8 +27,58 @@ the execution time of each sorting algorithm.
     \cppcode{../counting_sort.cpp}
     \label{code:counting}
 \end{code}
+
+\begin{code}
+    \caption{Makefile}
+    \inputminted[fontsize=\small]{make}{../Makefile}
+\end{code}
+
 \subsection{Output}
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.4\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./img/out-1.png}
+        \caption{Execution time for n=1000}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.4\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./img/out-2.png}
+        \caption{Execution time for n=10000}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.4\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./img/out-3.png}
+        \caption{Execution time for n=50000}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.4\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./img/out-4.png}
+        \caption{Execution time for n=100000}
+    \end{subfigure}
+    
+    \caption{Output for soting algorithm execution time}
+
+\end{figure}
+
 \subsection{Result Analysis \& Discussion}
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.4\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{task1_insertion.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.4\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{task1_merge_count.png}
+    \end{subfigure}
+
+    \caption{Time vs. Input size plot for insertion, merge and counting sort}
+\end{figure}
 
 \newpage
 \section{Task 2}
@@ -62,4 +112,8 @@ randomly generated data.
     \cppcode{../bubble.cpp}
 \end{code}
 \subsection{Output}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{task1_merge_count.png}
+\end{figure}
 \subsection{Result Analysis \& Discussion}
