@@ -13,7 +13,7 @@ int main() {
   if (myfile.is_open()) {
     srand(time(0));
     for (int k = 0; k < n; k++) {
-      int x = rand() % 10 + 1;
+      int x = rand() % 100000 + 1;
       // int x = rand();
       myfile << x << "\n";
     }

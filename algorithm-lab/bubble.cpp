@@ -16,27 +16,11 @@ void bubble_sort(vector<int> &nums_for_bubble, int p, int r) {
   for (int i = p; i < r; i++) {
     for (int j = p; j < r - (i - p); j++) {
       if (nums_for_bubble[j] > nums_for_bubble[j + 1]) {
-        // swap
-        // int temp = nums_for_bubble[j + 1];
-        // nums_for_bubble[j + 1] = nums_for_bubble[j];
-        // nums_for_bubble[j] = temp;
         swap(nums_for_bubble[j], nums_for_bubble[j + 1]);
       }
     }
   }
 }
-void insertion_sort(vector<int> &A, int p, int r) {
-  for (int i = p + 1; i <= r; i++) {
-    int key = A[i];
-    int j = i - 1;
-    while (j >= 0 && A[j] > key) {
-      A[j + 1] = A[j];
-      j--;
-    }
-    A[j + 1] = key;
-  }
-}
-
 void merge(vector<int> &A, int p, int q, int r) {
   int nl = q - p + 1;
   int nr = r - q;
@@ -108,12 +92,14 @@ int main() {
 
   vector<int> clone = nums;
 
+  vector<double> times;
+
   int len = nums.size();
   int threshold;
   cout << "Enter start threshold: ";
   cin >> threshold;
 
-  VariadicTable<int, double> vt({"Threshold", "Time (ms)"}, 10);
+  VariadicTable<int, double> vtable({"Threshold", "Time (ms)"}, 10);
   for (int i = 0; i < 20; i++) {
     auto st = high_resolution_clock::now();
 
@@ -124,13 +110,19 @@ int main() {
     double time_taken =
         chrono::duration_cast<chrono::nanoseconds>(et - st).count();
     time_taken *= 1e-6;
+    times.push_back(time_taken);
 
     // for (auto x : nums)
     //   cout << x << endl;
-    vt.addRow(threshold, time_taken);
+    vtable.addRow(threshold, time_taken);
     threshold++;
   }
-  vt.print(std::cout);
+  cout << "[ ";
+  for (auto x : times) {
+    cout << x << ", ";
+  }
+  cout << "\b\b]" << endl;
+  vtable.print(std::cout);
 
   return 0;
 }

@@ -53,12 +53,12 @@ int main() {
   auto et = high_resolution_clock::now();
   double time_taken =
       chrono::duration_cast<chrono::nanoseconds>(et - st).count();
-  time_taken *= 1e-9;
+  time_taken *= 1e-6;
 
-  for (auto x : nums)
-    cout << x << endl;
+  // for (auto x : nums)
+  //   cout << x << endl;
 
-  cout << "Time taken for counting sort: " << time_taken << endl;
+  cout << "Time taken for counting sort: " << time_taken << " ms" << endl;
   cout << "No. of Datas: " << nums.size() << endl;
   return 0;
 }

@@ -1,4 +1,3 @@
-#include <algorithm>
 #include <chrono>
 #include <cstdlib>
 #include <ctime>
@@ -22,8 +21,7 @@ int main() {
   }
 
   inputFile.close();
-  // sort(nums.begin(), nums.end());
-  // reverse(nums.begin(), nums.end());
+
   auto st = high_resolution_clock::now();
   // insertion sort
   for (int i = 1; i < nums.size(); i++) {
@@ -38,9 +36,9 @@ int main() {
   auto et = high_resolution_clock::now();
   double time_taken =
       chrono::duration_cast<chrono::nanoseconds>(et - st).count();
-  time_taken *= 1e-9;
+  time_taken *= 1e-6;
 
-  cout << "Time taken for insertion sort: " << time_taken << " sec" << endl;
+  cout << "Time taken for insertion sort: " << time_taken << " ms" << endl;
   cout << "No. of Datas: " << nums.size() << endl;
   return 0;
 }
