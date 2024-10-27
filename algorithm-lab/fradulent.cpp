@@ -1,10 +1,9 @@
 #include <bits/stdc++.h>
-#include <vector>
 using namespace std;
 int main(int argc, char *argv[]) {
   int n, d;
   cin >> n >> d;
-  vector<int> expenditure(n);
+  int expenditure[n];
 
   for (int i = 0; i < n; i++) {
     cin >> expenditure[i];
@@ -12,7 +11,7 @@ int main(int argc, char *argv[]) {
   int i, j;
   int notification = 0;
   for (i = d - 1, j = i + 1; i < n; i++) {
-    sort(expenditure.begin(), expenditure.begin() + i);
+    sort(expenditure, expenditure + d);
     int median_index;
     int median;
     if (i % 2 != 0) {
