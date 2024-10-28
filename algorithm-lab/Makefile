@@ -17,6 +17,12 @@ merge: merge_sort.cpp
 count: counting_sort.cpp
 	$(CC) counting_sort.cpp -o counting.out
 	./counting.out
+hi: hybrid_sort.cpp
+	$(CC) $^ -o hi.out
+	./hi.out
+hb: bubble.cpp
+	$(CC) $^ -o hb.out
+	./hb.out
 
 clean:
 	rm *.out

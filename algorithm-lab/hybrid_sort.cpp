@@ -1,3 +1,4 @@
+#include "include/VariadicTable.h"
 #include <chrono>
 #include <cmath>
 #include <csignal>
@@ -90,27 +91,39 @@ int main() {
   }
 
   inputFile.close();
+  vector<int> clone = nums;
+
+  vector<double> times;
 
   int len = nums.size();
-
   int threshold;
-  cout << "Enter a threshold value: ";
+  cout << "Enter start threshold: ";
   cin >> threshold;
 
-  auto st = high_resolution_clock::now();
+  VariadicTable<int, double> vtable({"Threshold", "Time (ms)"}, 10);
+  for (int i = 0; i < 20; i++) {
+    auto st = high_resolution_clock::now();
 
-  // hybrid sort
-  hybrid_sort(nums, 0, len - 1, threshold);
+    // hybrid sort
+    hybrid_sort(nums, 0, len - 1, threshold);
 
-  auto et = high_resolution_clock::now();
-  double time_taken =
-      chrono::duration_cast<chrono::nanoseconds>(et - st).count();
-  time_taken *= 1e-6;
+    auto et = high_resolution_clock::now();
+    double time_taken =
+        chrono::duration_cast<chrono::nanoseconds>(et - st).count();
+    time_taken *= 1e-6;
+    times.push_back(time_taken);
 
-  // for (auto x : nums)
-  //   cout << x << endl;
+    // for (auto x : nums)
+    //   cout << x << endl;
+    vtable.addRow(threshold, time_taken);
+    threshold++;
+  }
+  cout << "[ ";
+  for (auto x : times) {
+    cout << x << ", ";
+  }
+  cout << "\b\b]" << endl;
+  vtable.print(std::cout);
 
-  cout << "Time taken for hybrid sort: " << time_taken << " ms" << endl;
-  cout << "No. of Datas: " << nums.size() << endl;
   return 0;
 }

@@ -1,13 +1,13 @@
 \documentclass[12pt,a4paper]{article}
 \usepackage{graphicx}
 \usepackage[a4paper,top=2cm,bottom=3cm]{geometry}
-\usepackage{blindtext}
 % \usepackage{tgpagella}
 \usepackage{inconsolata}
 \usepackage{float}
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{parskip}
+\usepackage{booktabs}
 \usepackage{hyperref}
 \usepackage{minted}
 % university
@@ -27,7 +27,7 @@
 \newcommand{\prof}{Professor}
 \newcommand{\lec}{Lecturer}
 
-\newcommand{\thedesignation}{\lec}
+\newcommand{\thedesignation}{\asp}
 
 \newenvironment{code}{\captionsetup{type=listing}}{}
 %%%%%%%%%%%%%%%% Minted Style for C++ files %%%%%%
@@ -68,7 +68,7 @@ texcl=false
 \includegraphics[width=0.25\textwidth]{logo}\par\vspace{1cm}
 {\scshape\LARGE \univ\par}
 \vspace{.5cm}
-{\scshape\Large \thedept\par}
+{\Large \thedept\par}
 \vspace{1cm}
 {\scshape\Large \thecourse\par}
 \vspace{1cm}
