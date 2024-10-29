@@ -61,6 +61,7 @@ the execution time of each sorting algorithm.
     \end{subfigure}
     
     \caption{Output for soting algorithm execution time}
+    \label{fig:task1}
 
 \end{figure}
 
@@ -78,8 +79,21 @@ the execution time of each sorting algorithm.
     \end{subfigure}
 
     \caption{Time vs. Input size plot for insertion, merge and counting sort}
+    \label{fig:task1plot}
 \end{figure}
 
+From \cref{fig:task1} we can see that as n approaches a large number
+the execution time of
+insertion sort is increasing in a fast manner.
+By plotting the times in time vs input size
+graph, see \cref{fig:task1plot} we can say that the time for insertion sort is 
+increasing in a quadratic manner whereas for merge sort and counting sort 
+time increases in a linear manner. But in case of merge sort the graph is not 
+fully linear and more steeper than the counting sort. 
+This property is similar to our known characteristics for insertion sort, merge sort and counting sort accordingly.
+But counting sort have some limitations like random data range, and
+unstable sorting if cummulative sum is not used. To implement the counting sort
+we need to be cautious of these issues.
 \newpage
 \section{Task 2}
 \subsection{Problem Statement}
@@ -95,6 +109,23 @@ threshold on randomly generated data.
     \cppcode{../hybrid_sort.cpp}
 \end{code}
 \subsection{Output}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.4\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{img/}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.4\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{task1_merge_count.png}
+    \end{subfigure}
+
+    \caption{Time vs. Input size plot for insertion, merge and counting sort}
+    \label{fig:task1plot}
+\end{figure}
+
 \subsection{Result Analysis \& Discussion}
 
 \newpage
