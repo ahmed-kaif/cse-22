@@ -7,26 +7,19 @@ using namespace std;
 typedef pair<int, int> Point;
 typedef vector<Point> vpii;
 
-// struct comp {
-//   // Operator() overloading
-//   bool operator()(const pair<int, int> &p1, const pair<int, int> &p2) const {
-//     double slope1 = tan(p1.second / p1.first);
-//     double slope2 = tan(p2.second / p2.first);
-//     return slope1 < slope2;
-//   }
-// };
-
-set<Point> hull_pts;
 vpii hull_points;
 
-// TODO: Sort points in polar angle order
-bool comp(Point p1, Point p2) {
-  double angle1 = atan(p1.second / p1.first);
-  double angle2 = atan(p2.second / p2.first);
-  if (angle1 < angle2)
-    return true;
-  else
-    return false;
+bool order(pair<int, int> p1, pair<int, int> p2) {
+  Point ref = hull_points[0];
+  int dx1 = p1.first - ref.first, dy1 = p1.second - ref.second;
+  int dx2 = p2.first - ref.first, dy2 = p2.second - ref.second;
+
+  int cross = dx1 * dy2 - dy1 * dx2;
+
+  if (cross == 0)
+    return (dx1 * dx1 + dy1 * dy1) < (dx2 * dx2 + dy2 * dy2);
+
+  return cross > 0;
 }
 
 int get_side(Point p1, Point p2, Point p) {
@@ -54,14 +47,8 @@ int dist(Point p1, Point p2, Point p) {
              ((p1.first - p.first) * (p2.second - p1.second)));
 }
 
-int raw_dist(Point p1, Point p2, Point p) {
-  return (((p2.first - p1.first) * (p1.second - p.second)) -
-          ((p1.first - p.first) * (p2.second - p1.second)));
-}
-
 void quick_hull(vpii pts, int n, Point p1, Point p2, int side) {
-
-  // find point w max dist
+  // find point with max dist
   int max_dist = 0;
   int max_index = -1;
   for (int i = 0; i < n; i++) {
@@ -71,7 +58,7 @@ void quick_hull(vpii pts, int n, Point p1, Point p2, int side) {
       max_dist = temp_dist;
     }
   }
-
+  // push 2 extreme points
   if (max_index == -1) {
     hull_points.push_back(p1);
     hull_points.push_back(p2);
@@ -87,6 +74,7 @@ int main() {
   vpii P; // set of all points
   vector<int> X;
   vector<int> Y;
+  cout << "How many points? ";
   cin >> n;
   srand(time(0));
   for (int k = 0; k < n; k++) {
@@ -107,12 +95,12 @@ int main() {
   // P.push_back(make_pair(110, 45));
   // P.push_back(make_pair(110, 95));
 
-  cout << "[ ";
+  cout << "X = [ ";
   for (int i = 0; i < n; i++) {
     cout << P[i].first << ", ";
   }
   cout << "\b\b ]" << endl;
-  cout << "[ ";
+  cout << "Y = [ ";
   for (int i = 0; i < n; i++) {
     cout << P[i].second << ", ";
   }
@@ -129,21 +117,16 @@ int main() {
   quick_hull(P, n, min, max, 1);
   quick_hull(P, n, min, max, -1);
 
-  sort(hull_points.begin(), hull_points.end(), comp);
-  // auto itr = unique(hull_points.begin(), hull_points.end());
-  // hull_points.erase(itr, hull_points.end());
-  for (auto x : hull_points) {
-    hull_pts.insert(x);
-  }
+  sort(hull_points.begin(), hull_points.end(), order);
+  hull_points.erase(unique(hull_points.begin(), hull_points.end()),
+                    hull_points.end());
 
-  cout << "[ ";
-  for (auto x : hull_pts) {
+  cout << "x = [ ";
+  for (auto x : hull_points)
     cout << x.first << ", ";
-  }
-  cout << "\b\b ] " << endl;
-  cout << "[ ";
-  for (auto x : hull_pts) {
+  cout << "\b\b" << "," << hull_points[0].first << "]" << endl;
+  cout << "y = [ ";
+  for (auto x : hull_points)
     cout << x.second << ", ";
-  }
-  cout << "\b\b ] " << endl;
+  cout << "\b\b" << "," << hull_points[0].second << "]" << endl;
 }
