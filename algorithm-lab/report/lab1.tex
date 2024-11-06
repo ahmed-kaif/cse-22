@@ -112,22 +112,49 @@ threshold on randomly generated data.
 
 \begin{figure}[H]
     \centering
-    \begin{subfigure}[b]{0.4\textwidth}
+    \begin{subfigure}[t]{0.4\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{img/}
+        \includegraphics[scale=0.4]{img/task4/hi-1000.png}
+        \caption{Hybrid sort for input size 1,000}
     \end{subfigure}
     \hfill
-    \begin{subfigure}[b]{0.4\textwidth}
+    \begin{subfigure}[t]{0.4\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{task1_merge_count.png}
+        \includegraphics[scale=0.4]{img/task4/hi-10000.png}
+        \caption{Hybrid sort for input size 10,000}
     \end{subfigure}
-
-    \caption{Time vs. Input size plot for insertion, merge and counting sort}
-    \label{fig:task1plot}
+    \hfill
+    \begin{subfigure}[t]{0.4\textwidth}
+        \centering
+        \includegraphics[scale=0.4]{img/task4/hi-50k.png}
+        \caption{Hybrid sort for input size 50,000}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.4\textwidth}
+        \centering
+        \includegraphics[scale=0.4]{img/task4/hi-1lac.png}
+        \caption{Hybrid sort for input size 1,00,000}
+    \end{subfigure}
+    \caption{Hybrid sort execution time for various threshold values \&
+    various input size}
+    \label{fig:task2}
 \end{figure}
 
 \subsection{Result Analysis \& Discussion}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{img/task2/task2_performance_comparison.png}
+    \caption{Performance comparison of hybrid sort across various data sizes for various thresholds}
+    \label{fig:task2plot}
+\end{figure}
+From \cref{fig:task2plot} it can be easily said that with increasing input size \textit{n} the threshold value for hybrid sort using insertion sort also increases.
+For input size 1,000 we obtain a threshold around 21, for n = 10,000 threshold becomes approximately 23 and for the last two the value is 25.
+% And this is the expected characteristics, because when the input size is
+% increasing, the complexity for insertion sort is also increasing
 
+In case of merge sort (see \cref{code:merge}), we know that merge sort doesn't depend on any thresholds,
+rather in every case it follows an avarage case complexity of 
+$\mathbb{O}(n\log n)$
 \newpage
 \section{Task 3}
 \subsection{Problem Statement}
@@ -142,38 +169,111 @@ randomly generated data.
     \caption{Code for hybrid sort with bubble sort}
     \cppcode{../bubble.cpp}
 \end{code}
+
 \subsection{Output}
+For hybrid sort with insertion sort, see \cref{fig:task2}
+
+\textbf{Output for hybrid sort with bubble sort:}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{task1_merge_count.png}
+    \begin{subfigure}[t]{0.4\textwidth}
+        \centering
+        \includegraphics[scale=0.4]{img/task4/hb-1000.png}
+        \caption{Hybrid sort for input size 1,000}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.4\textwidth}
+        \centering
+        \includegraphics[scale=0.4]{img/task4/hb-10000.png}
+        \caption{Hybrid sort for input size 10,000}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.4\textwidth}
+        \centering
+        \includegraphics[scale=0.4]{img/task4/hb-50k.png}
+        \caption{Hybrid sort for input size 50,000}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.4\textwidth}
+        \centering
+        \includegraphics[scale=0.4]{img/task4/hb-1lac.png}
+        \caption{Hybrid sort for input size 1,00,000}
+    \end{subfigure}
+    \caption{Hybrid sort with bubble sort execution time for various threshold values \&
+    various input size}
+    \label{fig:task3}
 \end{figure}
 \subsection{Result Analysis \& Discussion}
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=\textwidth]{img/task3_performance_comparison_bubble.png}
+    \end{center}
+    \caption{Performance comparison of hybrid sort using bubble sort across various data sizes for various thresholds}
+    \label{fig:task3plot}
+\end{figure}
+
 
 \begin{table}[H]
     \centering
     \caption{3-way comparison table for merge \& hybrid sort}
     \label{tab:comp}
-\begin{tabular}{llrr}
+\begin{tabular}{lrrr}
     \toprule
-    \multicolumn{4}{c}{Sorting Algorithm} \\
+    \multicolumn{4}{c}{Execution time (ms)} \\
     \cmidrule(r){2-4}
-    Property & Merge Sort & Hybrid w/ insertion sort & Hybrid w/ bubble sort \\
+    Input Size & Merge Sort & Hybrid w/ insertion sort & Hybrid w/ bubble sort \\
     \midrule
-    Gnat & per gram & 13.65 \\
-    & each & 0.01 \\
-    Gnu & stuffed & 92.50 \\
-    Emu & stuffed & 33.33 \\
-    Armadillo & frozen & 8.99 \\
+    1000 & 0.625851 & 0.1283, th 21 & 0.183893, th 19\\
+    10,000 & 7.05903 &  1.69527, th 23 &  2.452, th 17\\
+    50,000 & 37.5342 & 10.6232, th 24 &14.2312, th 21\\
+    1,00,000 & 78.2175  & 24.1164, th 24& 30.2731, th 17 \\
     \bottomrule
 \end{tabular}
 \end{table}
 
+From \cref{fig:task2plot}, \cref{fig:task3plot} it can be said that hybrid
+sort significantly reduces the execution time than merge sort. And with
+appropriate threshold value both of the hybrid sort outperforms merge
+sort, which is shown in \cref{tab:comp}.
+
+In conclusion, the implementation is consistent with the expected outcome,
+because for small data size insertion sort and bubble sort performs better than
+merge sort. By taking the advantage of this property, both hybrid sort using
+insertion sort and hybrid sort using bubble sort was implemented so that for 
+a certain threshold value the merge sort will not be used. And this increases 
+the execution time significantly.
+
+\newpage
 \section{Task 4}
 \subsection{Problem Statement}
+HackerLand National Bank has a simple policy for warning clients about possible fraudulent account activity. If the amount spent by a client on a particular day is greater than or equal to  the client's median spending for a trailing number of days, they send the client a notification about potential fraud. The bank doesn't send the client any notifications until they have at least that trailing number of prior days' transaction data.
+
+Given the number of trailing days  and a client's total daily expenditures for a period of  days, determine the number of times the client will receive a notification over all  days.
+
+\textbf{Input Format}
+
+The first line contains two space-separated integers  and , the number of days of transaction data, and the number of trailing days' data used to calculate median spending respectively.
+The second line contains  space-separated non-negative integers where each integer  denotes .
+
+\textbf{Constraints}
+\begin{itemize}
+    \item $ 1 \le n \le 2\times10^5  $
+    \item $ 1\le d \le n $
+    \item $ 0 \le expenditure[i] \le 200 $ 
+\end{itemize}
 
 \subsection{Code}
 \begin{code}
-    
+    \label{code:fradulent}
+    \caption{Code for Fradulent Activity Notifications}
+    \cppcode{../fradulent.cpp}
 \end{code}
 
 \subsection{Output}
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[scale=0.5]{img/fradulent_ac.png}
+    \end{center}
+    \caption{Accepted screenshot for the problem}\label{fig:}
+\end{figure}
+
