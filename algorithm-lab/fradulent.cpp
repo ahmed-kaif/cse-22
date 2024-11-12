@@ -1,9 +1,7 @@
 #include <bits/stdc++.h>
-#include <vector>
-#include <set>
-using namespace std;
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
+using namespace std;
 using namespace __gnu_pbds;
 template<typename T>
 using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
@@ -22,33 +20,42 @@ template<typename T>struct OrderedMultiset {
 };
 // find_by_order, order_of_key
 
-int get_median(multiset<int>& window, int d) {
-    auto mid = next(window.begin(), d / 2);
-    if (d % 2 == 0) {
-        return ((*mid) + *prev(mid, 1)) / 2.0;
+
+double get_median(OrderedMultiset<int> &days, int d)
+{
+    double median;
+    if (d % 2 == 1) {
+        median = days.find_by_order(d / 2 );
+    } else {
+        median = (days.find_by_order(d / 2 - 1) + days.find_by_order(d / 2)) / 2.0;
     }
-    return *mid;
+    return median;
 }
 
-int main() {
+int main()
+{
     int n, d;
     cin >> n >> d;
     vector<int> expenditure(n);
 
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++)
+    {
         cin >> expenditure[i];
     }
 
-    OrderedMultiset<int> window(expenditure.begin(), expenditure.begin() + d);
+    OrderedMultiset<int>days;
+    for(int i=0; i<d ; i++)days.insert(expenditure[i]);
     int notifications = 0;
 
-    for (int i = d; i < n; i++) {
-        int median = get_median(window, d);
-        if (expenditure[i] >= 2 * median) {
+    for (int i = d; i < n; i++)
+    {
+        double median = get_median(days, d);
+        if (expenditure[i] >= 2 * median)
+        {
             notifications++;
         }
-        window.insert(expenditure[i]);
-        window.erase(window.lower_bound(expenditure[i - d]));
+        days.insert(expenditure[i]);
+        days.erase(expenditure[i - d]);
     }
 
     cout << notifications << endl;
