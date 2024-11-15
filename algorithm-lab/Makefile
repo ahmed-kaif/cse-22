@@ -1,6 +1,7 @@
 CC=g++
 
-all: random insertion merge count
+sort: random insertion merge count
+convex: points graham quick
 
 random: random_number.cpp
 	$(CC) random_number.cpp -o random.out
@@ -23,6 +24,17 @@ hi: hybrid_sort.cpp
 hb: bubble.cpp
 	$(CC) $^ -o hb.out
 	./hb.out
+
+points: generate_points.cpp
+	$(CC) $^ -o points.out
+	./points.out
+graham:	graham_scan.cpp
+	$(CC) $^ -o graham_scan.out
+	./graham_scan.out
+
+quick: quickhull.cpp
+	$$(CC) $^ -o quickhull.out
+	./quickhull.out
 
 clean:
 	rm *.out
