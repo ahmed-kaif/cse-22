@@ -1,8 +1,10 @@
 #include <algorithm>
 #include <bits/stdc++.h>
+#include <chrono>
 #include <utility>
 #include <vector>
 using namespace std;
+using namespace std::chrono;
 
 typedef pair<int, int> Point;
 typedef vector<Point> vpii;
@@ -69,7 +71,9 @@ int main() {
   vpii P;
   read_points_from_file("points.txt", P);
   int n = P.size();
-  print_points(P, n);
+  // print_points(P, n);
+
+  auto st = high_resolution_clock::now(); // clock start
 
   Point min = get_min(P);
   Point max = get_max(P);
@@ -77,12 +81,19 @@ int main() {
   quick_hull(P, n, min, max, 1);
   quick_hull(P, n, min, max, -1);
 
+  auto et = high_resolution_clock::now(); // clock end
+  double time_taken =
+      chrono::duration_cast<chrono::nanoseconds>(et - st).count();
+  time_taken *= 1e-6;
+
   sort(hull_points.begin(), hull_points.end(), order);
   hull_points.erase(unique(hull_points.begin(), hull_points.end()),
                     hull_points.end());
 
   cout << "Convex hull points using Quick Hull:" << endl;
-  print_points(hull_points, hull_points.size());
+  // print_points(hull_points, hull_points.size());
+  cout << "Time taken for Quick hull: " << time_taken << " ms" << endl;
+  cout << "No. of Points: " << n << endl;
 }
 
 void read_points_from_file(const string file_name, vpii &points) {
@@ -106,10 +117,10 @@ void print_points(const vpii points, int n) {
   for (int i = 0; i < n; i++) {
     cout << points[i].first << ", ";
   }
-  cout << "\b\b ]" << endl;
+  cout << points[0].first << " ]" << endl;
   cout << "Y = [ ";
   for (int i = 0; i < n; i++) {
     cout << points[i].second << ", ";
   }
-  cout << "\b\b ]" << endl;
+  cout << points[0].second << " ]" << endl;
 }

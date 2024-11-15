@@ -33,7 +33,7 @@ graham:	graham_scan.cpp
 	./graham_scan.out
 
 quick: quickhull.cpp
-	$$(CC) $^ -o quickhull.out
+	$(CC) $^ -o quickhull.out
 	./quickhull.out
 
 clean:

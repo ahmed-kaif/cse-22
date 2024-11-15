@@ -1,10 +1,12 @@
 #include <algorithm>
 #include <bits/stdc++.h>
+#include <chrono>
 #include <ctime>
 #include <stack>
 #include <utility>
 #include <vector>
 using namespace std;
+using namespace std::chrono;
 
 typedef pair<int, int> Point;
 typedef vector<Point> vpii;
@@ -35,9 +37,8 @@ Point next_to_top(stack<Point> &s) {
   return next_top;
 }
 
-void read_points_from_file(const string file_name, vpii & points);
+void read_points_from_file(const string file_name, vpii &points);
 void print_points(const vpii points, int n);
-
 
 int main() {
   read_points_from_file("points.txt", P);
@@ -54,11 +55,12 @@ int main() {
   };
 
   sorted_points = P;
-  sort(sorted_points.begin(), sorted_points.end(), order);
-
   int m = sorted_points.size();
-  print_points(sorted_points, m);
+  // print_points(sorted_points, m);
 
+  auto st = high_resolution_clock::now(); // clock start
+
+  sort(sorted_points.begin(), sorted_points.end(), order);
   S.push(p0);
   S.push(sorted_points[1]);
   S.push(sorted_points[2]);
@@ -76,12 +78,17 @@ int main() {
     hull_pts.push_back(p);
     S.pop();
   }
-
+  auto et = high_resolution_clock::now(); // clock end
+  double time_taken =
+      chrono::duration_cast<chrono::nanoseconds>(et - st).count();
+  time_taken *= 1e-6;
   cout << "Convex hull points using Graham Scan:" << endl;
-  print_points(hull_pts, hull_pts.size());
+  // print_points(hull_pts, hull_pts.size());
+  cout << "Time taken for Graham Scan: " << time_taken << " ms" << endl;
+  cout << "No. of Points: " << P.size() << endl;
 }
 
-void read_points_from_file(const string file_name, vpii & points){
+void read_points_from_file(const string file_name, vpii &points) {
   ifstream inputFile(file_name);
   if (!inputFile.is_open()) {
     cerr << "Error opening the file!" << endl;
@@ -102,10 +109,10 @@ void print_points(const vpii points, int n) {
   for (int i = 0; i < n; i++) {
     cout << get_x(points[i]) << ", ";
   }
-  cout << "\b\b ]" << endl;
+  cout << get_x(points[0]) << " ]" << endl;
   cout << "Y = [ ";
   for (int i = 0; i < n; i++) {
     cout << get_y(points[i]) << ", ";
   }
-  cout << "\b\b ]" << endl;
+  cout << get_y(points[0]) << " ]" << endl;
 }
