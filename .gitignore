@@ -15,7 +15,7 @@ assembly/*.OBJ
 *.cb
 *.cb2
 .*.lb
-
+.idea/
 ## Intermediate documents:
 *.dvi
 *.xdv

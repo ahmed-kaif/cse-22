@@ -9,15 +9,15 @@ struct vertex {
   int data;
   color_t color;
   int distance = -1;
-  Vertex *pi = NULL;
+  Vertex *pi = nullptr;
   vector<Vertex *> neighbors;
 };
 
 vector<Vertex *> adj;
 
 Vertex *create_vertex(int item, color_t color) {
-  Vertex *new_vertex = new Vertex;
-  if (new_vertex == NULL) {
+  auto *new_vertex = new Vertex;
+  if (new_vertex == nullptr) {
     cout << "Error!!" << endl;
     exit(1);
   }
@@ -28,14 +28,14 @@ Vertex *create_vertex(int item, color_t color) {
 
 void add_neighbor(Vertex *u, Vertex *v) { u->neighbors.push_back(v); }
 
-void set_color(Vertex *v, color_t color) { v->color = color; }
-void set_distance(Vertex *v, int distance) { v->distance = distance; }
+void set_color(Vertex *v, const color_t color) { v->color = color; }
+void set_distance(Vertex *v, const int distance) { v->distance = distance; }
 
 void bfs(Vertex *s) {
-  for (auto &vertex : adj) {
+  for (const auto &vertex : adj) {
     set_color(vertex, WHITE);
     set_distance(vertex, INT_MAX);
-    vertex->pi = NULL;
+    vertex->pi = nullptr;
   }
 
   set_color(s, GRAY);
@@ -82,7 +82,7 @@ int main() {
     int u, v;
     sscanf(input.c_str(), "%d %d", &u, &v);
 
-    if (u == 0 && v == 0) break; 
+    if (u == 0 && v == 0) break;
 
     
     if (u >= 1 && u <= n && v >= 1 && v <= n) {
@@ -94,7 +94,7 @@ int main() {
 
   bfs(adj[0]);  
 
-  for (auto &vertex : adj) {
+  for (const auto &vertex : adj) {
     cout << "Vertex: " << vertex->data << ", Distance: " << vertex->distance
          << ", Parent: " << (vertex->pi ? to_string(vertex->pi->data) : "None") << endl;
   }
