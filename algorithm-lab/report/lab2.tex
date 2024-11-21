@@ -1,16 +1,13 @@
 \section{Convex Hull}
 \subsection{Problem Statement}
-Implement and compare \textit{Graham Scan} and \textit{Quick Hull} algorithm based on
-various input size on randomly generated points.
-The comparison metric should be the execution time of each convex hull
-finding algorithm.
+\begin{itemize}
+    \item Implement Quickhull and Graham Scan algorithm to find the convex hull of 2D points. 
+    \item Visualize the input 2D points and the convex hull boundary. 
+    \item Compare Quickhull and Graham Scan based on various input size on randomly
+        generated points.  The comparison metric should be the execution time of 
+        each sorting algorithm.
+\end{itemize}
 \subsection{Code}
-\begin{code}
-    \caption{graham\_scan.cpp}
-    \cppcode{../graham_scan.cpp}
-    \label{code:graham}
-\end{code}
-
 \begin{code}
     \caption{quick\_hull.cpp}
     \cppcode{../quickhull.cpp}
@@ -18,8 +15,33 @@ finding algorithm.
 \end{code}
 
 \begin{code}
+    \caption{graham\_scan.cpp}
+    \cppcode{../graham_scan.cpp}
+    \label{code:graham}
+\end{code}
+\begin{code}
     \caption{Makefile}
-    \begin{minted}{make}
+\begin{minted}[
+linenos=true,
+fontfamily=tt,
+fontsize=\small,
+linenos=true,
+numberblanklines=true,
+breaklines=true,
+numbersep=5pt,
+gobble=0,
+frame=leftline,
+framerule=0.4pt,
+framesep=2mm,
+funcnamehighlighting=true,
+tabsize=4,
+obeytabs=false,
+mathescape=false
+samepage=false, %with this setting you can force the list to appear on the same page
+showspaces=false,
+showtabs =false,
+texcl=false
+    ]{make}
 CC=g++
 
 convex: points graham quick
@@ -37,6 +59,46 @@ quick: quickhull.cpp
 
 clean:
 	rm *.out
+    \end{minted}
+\end{code}
+
+
+\begin{code}
+    \caption{visualization.py}
+    \begin{minted}[
+linenos=true,
+fontfamily=tt,
+fontsize=\small,
+linenos=true,
+numberblanklines=true,
+breaklines=true,
+numbersep=5pt,
+gobble=0,
+frame=leftline,
+framerule=0.4pt,
+framesep=2mm,
+funcnamehighlighting=true,
+tabsize=4,
+obeytabs=false,
+mathescape=false
+samepage=false, %with this setting you can force the list to appear on the same page
+showspaces=false,
+showtabs =false,
+texcl=false
+    ]{python}
+import matplotlib.pyplot as plt 
+%matplotlib inline
+X = [ 44, 63, 90, 43, 54, 26, 42, 47, 57, 2, 61, 72, 24, 88, 82, 78, 33, 74, 55, 19, 99, 24, 42, 73, 18, 32, 41, 43, 64, 49, 8, 73, 66, 13, 66, 32, 27, 8, 82, 69, 5, 80, 59, 12, 56, 70, 86, 7, 40, 74, 54, 20, 65, 51, 59, 96, 76, 60, 100, 60, 83, 75, 23, 22, 4, 18, 57, 89, 16, 18, 11, 90, 43, 71, 24, 1, 11, 78, 60, 46, 51, 72, 51, 79, 100, 93, 12, 99, 82, 47, 51, 64, 26, 97, 92, 100, 56, 100, 31, 24 ]
+Y = [ 55, 98, 64, 46, 32, 64, 98, 29, 44, 83, 16, 14, 57, 82, 26, 77, 40, 22, 68, 61, 44, 93, 23, 50, 74, 30, 55, 16, 83, 97, 26, 92, 46, 72, 31, 64, 8, 20, 80, 99, 53, 97, 74, 74, 60, 16, 42, 3, 72, 5, 58, 80, 28, 46, 72, 64, 27, 34, 24, 8, 29, 20, 33, 62, 48, 58, 37, 21, 40, 75, 65, 86, 49, 94, 30, 7, 27, 33, 52, 63, 63, 7, 61, 67, 96, 62, 82, 54, 69, 6, 100, 13, 41, 85, 42, 42, 71, 6, 78, 82 ]
+x = [ 100, 69, 51, 42, 24, 2, 1, 7, 74, 100, 100 ]
+y = [ 96, 99, 100, 98, 93, 83, 7, 3, 5, 6, 96]
+
+plt.scatter(X,Y, label="n=100")
+plt.plot(x,y,color="red")
+plt.xlabel("x") 
+plt.ylabel("y")
+plt.legend()
+plt.savefig("convex_100pt.png", dpi=300, bbox_inches="tight")
     \end{minted}
 \end{code}
 
@@ -74,25 +136,41 @@ clean:
 \end{figure}
 
 \subsubsection*{Summary of Execution time}
-
 \begin{table}[H]
     \centering
-    \caption {Comparison table for Graham Scan \& Quick hull algorithm}
-    \label{tab:comp}
-\begin{tabular}{lrr}
-    \toprule
-    \multicolumn{3}{r}{Execution time (ms)} \\
-    \cmidrule(c){2-3}
-    Input Size & Graham Scan & Quick Hull\\ 
-    \midrule
-    1000 & 0.460258 & 0.413883\\
-    5000 & 2.73556 & 1.20198\\
-    10,000 & 5.5254 & 2.73906 \\
-    50,000 & 29.7845 & 8.96497 \\
-    1,00,000 & 61.4065  & 17.9454 \\
-    \bottomrule
-\end{tabular}
+    \caption{Comparison table for Graham Scan \& Quick Hull algorithm execution time}
+    \label{tab:comp2}
+    \begin{tabular}{lSS}
+        \toprule
+        \multicolumn{1}{c}{Input Size} & \multicolumn{1}{c}{Graham Scan (ms)} & \multicolumn{1}{c}{Quick Hull (ms)} \\
+        \midrule
+        1,000   & 0.460258 & 0.413883 \\
+        5,000   & 2.735560  & 1.201980 \\
+        10,000  & 5.525400   & 2.739060  \\
+        50,000  & 29.784500  & 8.964970 \\
+        100,000 & 61.406500  & 17.945400  \\
+        \bottomrule
+    \end{tabular}
 \end{table}
+\subsubsection*{Visualization}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.5\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./img/lab2/convex_100pt.png}
+        \caption{Convex hull visualization using graham scan for 100 points}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.5\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./img/lab2/convex_1kpt.png}
+        \caption{Convex hull visualization using quick hull for 1000 points}
+    \end{subfigure}
+    
+    \caption{Convex hull Visualization}
+    \label{fig:task2}
+\end{figure}
 \subsection{Analysis \& Discussion}
 Graham Scan is faster than quick hull for very number of points. 
 But with increasing number of points quick hull is significantly efficient
@@ -102,11 +180,3 @@ calculation. And this is more costly.
 In case of quick hull, there is no need to sort the points, rather it can find 
 the points by divide and conquer approach, which significantly decreases 
 the execution time for quick hull.
-
-\newpage
-\section{Matrix Multiplication}
-\subsection{Problem Statement}
-Implement and compare \textit{Graham Scan} and \textit{Quick Hull} algorithm based on
-various input size on randomly generated points.
-The comparison metric should be the execution time of each convex hull
-finding algorithm.

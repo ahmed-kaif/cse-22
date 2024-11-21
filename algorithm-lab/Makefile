@@ -1,7 +1,7 @@
 CC=g++
 
 sort: random insertion merge count
-convex: points graham quick
+convex: points graham graham_op quick
 
 random: random_number.cpp
 	$(CC) random_number.cpp -o random.out
@@ -31,6 +31,10 @@ points: generate_points.cpp
 graham:	graham_scan.cpp
 	$(CC) $^ -o graham_scan.out
 	./graham_scan.out
+
+graham_op: graham_scan_optimized.cpp
+	$(CC) $^ -o graham_scan_optimized.out
+	./graham_scan_optimized.out
 
 quick: quickhull.cpp
 	$(CC) $^ -o quickhull.out

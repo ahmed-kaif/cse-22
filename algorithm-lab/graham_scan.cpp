@@ -85,7 +85,6 @@ int main() {
   cout << "Convex hull points using Graham Scan:" << endl;
   // print_points(hull_pts, hull_pts.size());
   cout << "Time taken for Graham Scan: " << time_taken << " ms" << endl;
-  cout << "No. of Points: " << P.size() << endl;
 }
 
 void read_points_from_file(const string file_name, vpii &points) {
