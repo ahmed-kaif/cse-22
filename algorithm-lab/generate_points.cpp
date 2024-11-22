@@ -6,15 +6,15 @@ using namespace std;
 
 int main() {
   ofstream myfile;
-  int n;
+  long long n;
   cout << "How many points? ";
   cin >> n;
   myfile.open("./points.txt");
   if (myfile.is_open()) {
     srand(time(0));
     for (int k = 0; k < n; k++) {
-      int x = rand() % 100 + 1;
-      int y = rand() % 100 + 1;
+      long long x = rand() % n + 1;
+      long long y = rand() % n + 1;
       myfile << x << " " << y << "\n";
     }
     myfile.close();

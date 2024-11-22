@@ -9,6 +9,11 @@
 \end{itemize}
 \subsection{Code}
 \begin{code}
+    \caption{generate\_points.cpp}
+    \cppcode{../generate_points.cpp}
+    \label{code:points}
+\end{code}
+\begin{code}
     \caption{quick\_hull.cpp}
     \cppcode{../quickhull.cpp}
     \label{code:quickhull}
@@ -108,28 +113,28 @@ plt.savefig("convex_100pt.png", dpi=300, bbox_inches="tight")
     \centering
     \begin{subfigure}[b]{0.4\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{./img/lab2/p5k.png}
-        \caption{Execution time for n=5000}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[b]{0.4\textwidth}
-        \centering
         \includegraphics[width=\textwidth]{./img/lab2/p10k.png}
-        \caption{Execution time for n=10000}
+        \caption{Execution time for n=$10^4$}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.4\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{./img/lab2/p50k.png}
-        \caption{Execution time for n=50000}
+        \includegraphics[width=\textwidth]{./img/lab2/p100k.png}
+        \caption{Execution time for n=$10^5$}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.4\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{./img/lab2/p1lack.png}
-        \caption{Execution time for n=100000}
+        \includegraphics[width=\textwidth]{./img/lab2/p1000k.png}
+        \caption{Execution time for n=$10^6$}
     \end{subfigure}
-    
+    \hfill
+    \begin{subfigure}[b]{0.4\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./img/lab2/p1cr.png}
+        \caption{Execution time for n=$10^7$}
+
+    \end{subfigure}
     \caption{Convex hull algorithm execution time}
     \label{fig:task1}
 
@@ -139,19 +144,27 @@ plt.savefig("convex_100pt.png", dpi=300, bbox_inches="tight")
 \begin{table}[H]
     \centering
     \caption{Comparison table for Graham Scan \& Quick Hull algorithm execution time}
-    \label{tab:comp2}
+    \label{tab:comp}
     \begin{tabular}{lSS}
         \toprule
         \multicolumn{1}{c}{Input Size} & \multicolumn{1}{c}{Graham Scan (ms)} & \multicolumn{1}{c}{Quick Hull (ms)} \\
         \midrule
-        1,000   & 0.460258 & 0.413883 \\
-        5,000   & 2.735560  & 1.201980 \\
-        10,000  & 5.525400   & 2.739060  \\
-        50,000  & 29.784500  & 8.964970 \\
-        100,000 & 61.406500  & 17.945400  \\
+        $10^3$   & 0.440 & 1.000 \\
+        $5\times 10^3$   & 2.385  & 5.553 \\
+        $10^4$  & 5.193  & 12.297 \\
+        $5\times 10^4$  & 30.383 & 81.619\\
+        $10^5$ & 60.363  & 149.399  \\
+        $10^6$ & 696.266 & 2186.380 \\
+        $10^7$ & 7977.520 & 24343.100 \\
         \bottomrule
     \end{tabular}
 \end{table}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{img/lab2/comparison_plot.png}
+    \caption{Execution time comparison}
+    \label{fig:comp}
+\end{figure}
 \subsubsection*{Visualization}
 
 \begin{figure}[H]
@@ -172,11 +185,23 @@ plt.savefig("convex_100pt.png", dpi=300, bbox_inches="tight")
     \label{fig:task2}
 \end{figure}
 \subsection{Analysis \& Discussion}
-Graham Scan is faster than quick hull for very number of points. 
-But with increasing number of points quick hull is significantly efficient
-than graham scan. 
-This is because Graham scan needs to sort the points before doing its
-calculation. And this is more costly. 
-In case of quick hull, there is no need to sort the points, rather it can find 
-the points by divide and conquer approach, which significantly decreases 
-the execution time for quick hull.
+The implemented code sucessfully finds the convex hull points using
+Graham scan and Quick hull algorithms (see \cref{fig:task2}). In case of
+execution time, from the comparison \cref{tab:comp} and \cref{fig:comp}
+it is clear that Graham scan
+outperforms quick hull for any input size. With increasing number of input sizes
+Graham scan is almost 3 times faster than quick hull.
+
+This is because Graham scan has $O(n \log n)$ complexity for any input size. 
+Whereas Quick Hull algorithm uses a divide and conquer approach having the 
+the complexity of $O(n \log n)$ for avarage case and $O(n^2)$ in worst case.
+
+Graham scan always sorts the points in polar angle order. This step takes the 
+largest cost. More efficient algorithm for sorting can also imporve this step's 
+complexity. 
+
+In conclusion, Graham scan is more efficent in comparison to quick hull. Also
+the simplicity in implementation for Graham scan is much more
+preferred over quick
+hull algorithm.
+

@@ -1,117 +1,108 @@
 #include <algorithm>
 #include <bits/stdc++.h>
 #include <chrono>
-#include <ctime>
-#include <stack>
 #include <utility>
 #include <vector>
 using namespace std;
 using namespace std::chrono;
 
-typedef pair<int, int> Point;
+typedef long long ll;
+typedef pair<ll, ll> Point;
 typedef vector<Point> vpii;
-stack<Point> S;
-vpii P; // points are stored as (y,x)
-vpii sorted_points;
-vpii hull_pts;
 
-int get_y(const Point p) { return p.first; }
-int get_x(const Point p) { return p.second; }
-Point get_min(const vpii P) { return *min_element(P.begin(), P.end()); }
+vpii points;  // Points are stored as (y, x)
+vpii hull_pts; 
+Point p0;     // Reference point
 
-bool non_left_turn(const Point p1, const Point p2, Point p) {
-  int cross_prod = (get_x(p2) - get_x(p1)) * (get_y(p) - get_y(p1)) -
-                   (get_y(p2) - get_y(p1)) * (get_x(p) - get_x(p1));
-  if (cross_prod > 0)
-    return false;
-  else if (cross_prod < 0)
-    return true;
-  return false;
+ll get_y(const Point &p) { return p.first; }
+ll get_x(const Point &p) { return p.second; }
+
+ll cross_product(const Point &p1, const Point &p2, const Point &p3) {
+  return (get_x(p2) - get_x(p1)) * (get_y(p3) - get_y(p1)) -
+         (get_y(p2) - get_y(p1)) * (get_x(p3) - get_x(p1));
 }
 
-Point next_to_top(stack<Point> &s) {
-  Point top = s.top();
-  s.pop();
-  Point next_top = s.top();
-  s.push(top);
-  return next_top;
+bool polar_order(const Point &p1, const Point &p2) {
+  ll cross = cross_product(p0, p1, p2);
+  if (cross == 0) {
+    return (get_x(p1) - get_x(p0)) * (get_x(p1) - get_x(p0)) +
+           (get_y(p1) - get_y(p0)) * (get_y(p1) - get_y(p0)) <
+           (get_x(p2) - get_x(p0)) * (get_x(p2) - get_x(p0)) +
+           (get_y(p2) - get_y(p0)) * (get_y(p2) - get_y(p0));
+  }
+  return cross > 0;
 }
 
-void read_points_from_file(const string file_name, vpii &points);
-void print_points(const vpii points, int n);
+void read_points_from_file(const string &file_name, vpii &points);
+void print_points(const vpii &points);
 
 int main() {
-  read_points_from_file("points.txt", P);
-  Point p0 = get_min(P); // reference point
-  auto order = [&](Point p1, Point p2) -> bool {
-    int dx1 = get_x(p1) - get_x(p0), dy1 = get_y(p1) - get_y(p0);
-    int dx2 = get_x(p2) - get_x(p0), dy2 = get_y(p2) - get_y(p0);
+  read_points_from_file("points.txt", points);
 
-    int cross = dx1 * dy2 - dy1 * dx2;
-    if (cross == 0)
-      return (dx1 * dx1 + dy1 * dy1) < (dx2 * dx2 + dy2 * dy2);
+  p0 = *min_element(points.begin(), points.end(),
+                    [](const Point &p1, const Point &p2) {
+                      return p1 < p2; 
+                    });
 
-    return cross > 0;
-  };
+  auto start_time = high_resolution_clock::now(); // clock start
+  sort(points.begin(), points.end(), polar_order);
 
-  sorted_points = P;
-  int m = sorted_points.size();
-  // print_points(sorted_points, m);
-
-  auto st = high_resolution_clock::now(); // clock start
-
-  sort(sorted_points.begin(), sorted_points.end(), order);
-  S.push(p0);
-  S.push(sorted_points[1]);
-  S.push(sorted_points[2]);
-
-  for (int i = 3; i < m; i++) {
-    Point p_i = sorted_points[i];
-    while (S.size() > 1 && non_left_turn(next_to_top(S), S.top(), p_i)) {
-      S.pop();
+  vpii filtered_points = {p0};
+  for (size_t i = 1; i < points.size(); i++) {
+    while (i < points.size() - 1 &&
+           cross_product(p0, points[i], points[i + 1]) == 0) {
+      i++;
     }
-    S.push(p_i);
+    filtered_points.push_back(points[i]);
   }
 
-  while (!S.empty()) {
-    Point p = S.top();
-    hull_pts.push_back(p);
-    S.pop();
+  vector<Point> hull;
+  hull.push_back(filtered_points[0]);
+  hull.push_back(filtered_points[1]);
+  hull.push_back(filtered_points[2]);
+
+  for (ll i = 3; i < filtered_points.size(); i++) {
+    while (hull.size() > 1 &&
+           cross_product(hull[hull.size() - 2], hull.back(), filtered_points[i]) <= 0) {
+      hull.pop_back();
+    }
+    hull.push_back(filtered_points[i]);
   }
-  auto et = high_resolution_clock::now(); // clock end
-  double time_taken =
-      chrono::duration_cast<chrono::nanoseconds>(et - st).count();
-  time_taken *= 1e-6;
-  cout << "Convex hull points using Graham Scan:" << endl;
-  // print_points(hull_pts, hull_pts.size());
+
+  auto end_time = high_resolution_clock::now();
+
+  hull_pts = hull; 
+
+  double time_taken = duration_cast<nanoseconds>(end_time - start_time).count() * 1e-6;
   cout << "Time taken for Graham Scan: " << time_taken << " ms" << endl;
+
+  // cout << "Convex hull points:" << endl;
+  // print_points(hull_pts);
+  return 0;
 }
 
-void read_points_from_file(const string file_name, vpii &points) {
+void read_points_from_file(const string &file_name, vpii &points) {
   ifstream inputFile(file_name);
   if (!inputFile.is_open()) {
     cerr << "Error opening the file!" << endl;
     exit(1);
   }
-  string line;
-  while (getline(inputFile, line)) {
-    stringstream ss(line);
-    int x, y;
-    ss >> x >> y;
-    points.push_back(make_pair(y, x));
+  ll x, y;
+  while (inputFile >> x >> y) {
+    points.emplace_back(y, x);
   }
   inputFile.close();
 }
 
-void print_points(const vpii points, int n) {
+void print_points(const vpii &points, ll n) {
   cout << "X = [ ";
-  for (int i = 0; i < n; i++) {
+  for (ll i = 0; i < n; i++) {
     cout << get_x(points[i]) << ", ";
   }
-  cout << get_x(points[0]) << " ]" << endl;
+    cout << get_x(points[0]) << ", ";
   cout << "Y = [ ";
-  for (int i = 0; i < n; i++) {
+  for (ll i = 0; i < n; i++) {
     cout << get_y(points[i]) << ", ";
   }
-  cout << get_y(points[0]) << " ]" << endl;
+    cout << get_y(points[0]) << ", ";
 }

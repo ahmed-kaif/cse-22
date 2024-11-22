@@ -6,17 +6,18 @@
 using namespace std;
 using namespace std::chrono;
 
-typedef pair<int, int> Point;
+typedef long long ll;
+typedef pair<ll, ll> Point;
 typedef vector<Point> vpii;
 
 vpii hull_points;
 
 bool order(Point p1, Point p2) {
   Point ref = hull_points[0];
-  int dx1 = p1.first - ref.first, dy1 = p1.second - ref.second;
-  int dx2 = p2.first - ref.first, dy2 = p2.second - ref.second;
+  ll dx1 = p1.first - ref.first, dy1 = p1.second - ref.second;
+  ll dx2 = p2.first - ref.first, dy2 = p2.second - ref.second;
 
-  int cross = dx1 * dy2 - dy1 * dx2;
+  ll cross = dx1 * dy2 - dy1 * dx2;
 
   if (cross == 0)
     return (dx1 * dx1 + dy1 * dy1) < (dx2 * dx2 + dy2 * dy2);
@@ -24,9 +25,9 @@ bool order(Point p1, Point p2) {
   return cross > 0;
 }
 
-int get_side(Point p1, Point p2, Point p) {
-  int cross_prod = (p2.first - p1.first) * (p.second - p1.second) -
-                   (p2.second - p1.second) * (p.first - p1.first);
+ll get_side(Point p1, Point p2, Point p) {
+  ll cross_prod = (p2.first - p1.first) * (p.second - p1.second) -
+                  (p2.second - p1.second) * (p.first - p1.first);
   if (cross_prod > 0)
     return 1;
   else if (cross_prod < 0)
@@ -37,17 +38,17 @@ int get_side(Point p1, Point p2, Point p) {
 Point get_min(const vpii pts) { return *min_element(pts.begin(), pts.end()); }
 Point get_max(const vpii pts) { return *max_element(pts.begin(), pts.end()); }
 
-int dist(Point p1, Point p2, Point p) {
+ll dist(Point p1, Point p2, Point p) {
   return abs(((p2.first - p1.first) * (p1.second - p.second)) -
              ((p1.first - p.first) * (p2.second - p1.second)));
 }
 
-void quick_hull(const vpii pts, int n, Point p1, Point p2, int side) {
+void quick_hull(const vpii pts, ll n, Point p1, Point p2, ll side) {
   // find point with max dist
-  int max_dist = 0;
-  int max_index = -1;
-  for (int i = 0; i < n; i++) {
-    int temp_dist = dist(p1, p2, pts[i]);
+  ll max_dist = 0;
+  ll max_index = -1;
+  for (ll i = 0; i < n; i++) {
+    ll temp_dist = dist(p1, p2, pts[i]);
     if (get_side(p1, p2, pts[i]) == side && temp_dist > max_dist) {
       max_index = i;
       max_dist = temp_dist;
@@ -65,12 +66,12 @@ void quick_hull(const vpii pts, int n, Point p1, Point p2, int side) {
 }
 
 void read_points_from_file(const string file_name, vpii &points);
-void print_points(vpii points, int n);
+void print_points(vpii points, ll n);
 
 int main() {
   vpii P;
   read_points_from_file("points.txt", P);
-  int n = P.size();
+  ll n = P.size();
   // print_points(P, n);
 
   auto st = high_resolution_clock::now(); // clock start
@@ -90,7 +91,7 @@ int main() {
   hull_points.erase(unique(hull_points.begin(), hull_points.end()),
                     hull_points.end());
 
-  cout << "Convex hull points using Quick Hull:" << endl;
+  // cout << "Convex hull points using Quick Hull:" << endl;
   // print_points(hull_points, hull_points.size());
   cout << "Time taken for Quick hull: " << time_taken << " ms" << endl;
   cout << "No. of Points: " << n << endl;
@@ -105,21 +106,21 @@ void read_points_from_file(const string file_name, vpii &points) {
   string line;
   while (getline(inputFile, line)) {
     stringstream ss(line);
-    int x, y;
+    ll x, y;
     ss >> x >> y;
     points.push_back(make_pair(x, y));
   }
   inputFile.close();
 }
 
-void print_points(const vpii points, int n) {
+void print_points(const vpii points, ll n) {
   cout << "X = [ ";
-  for (int i = 0; i < n; i++) {
+  for (ll i = 0; i < n; i++) {
     cout << points[i].first << ", ";
   }
   cout << points[0].first << " ]" << endl;
   cout << "Y = [ ";
-  for (int i = 0; i < n; i++) {
+  for (ll i = 0; i < n; i++) {
     cout << points[i].second << ", ";
   }
   cout << points[0].second << " ]" << endl;
