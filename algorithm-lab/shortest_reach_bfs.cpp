@@ -8,14 +8,10 @@ int main() {
     int n, m;
     cin >> n >> m; // node , edge
     vector<int> adj[n + 1];
-    int visited[n + 1];
-    int distance[n + 1];
-    for (int i = 1; i < n + 1; i++) {
-      distance[i] = -1;
-      visited[i] = 0;
-    }
+    vector<int> visited(n + 1, 0);
+    vector<int> distance(n + 1, -1);
+    // edge input
     for (int i = 0; i < m; i++) {
-      // edge input
       int u, v;
       cin >> u >> v;
       adj[u].push_back(v);
@@ -25,8 +21,9 @@ int main() {
     cin >> s;
     // bfs
     queue<int> Q;
-    Q.push(s);      // start from source vertex
-    visited[s] = 1; // make the source vertex visited
+    Q.push(s);
+    distance[s] = 0;
+    visited[s] = 1;
     while (!Q.empty()) {
       int u = Q.front();
       Q.pop();
@@ -34,7 +31,7 @@ int main() {
         if (visited[adj[u][i]] == 0) {
           int v = adj[u][i];
           visited[v] = 1;
-          distance[v] = (distance[u] + 1) * 6;
+          distance[v] = distance[u] + 6;
           Q.push(v);
         }
       }
