@@ -1,3 +1,4 @@
+title reverse a string using stack
 .model small
 .stack 100h
 .code 
